@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Layout from "../../components/Layout";
 import {ToastContainer,toast} from "react-toastify";
 import axios from "axios";
+
 import {authentication, isAuth} from "../../lib/authentication";
 import {Redirect} from "react-router-dom";
 
@@ -15,6 +16,7 @@ const Signin = () => {
     }
 
     const handleSubmit = (e) => {
+
         e.preventDefault()
         axios({
             method:"POST",

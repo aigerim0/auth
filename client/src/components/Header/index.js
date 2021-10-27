@@ -18,8 +18,15 @@ const Header = () => {
                         className="mr-5  cursor-pointer border-b border-transparent hover:border-indigo-600">Home</Link>
                     <Link to="/private"
                         className="mr-5  cursor-pointer border-b border-transparent hover:border-indigo-600">Private</Link>
-                    <Link to='/admin' className="mr-5 cursor-pointer border-b border-transparent hover:border-indigo-600">
-                        Admin</Link>
+                    {
+                        isAuth().role === "admin" &&
+                        <Link to='/admin' className="mr-5 cursor-pointer border-b border-transparent hover:border-indigo-600">
+                            Admin
+                        </Link>
+                    }
+                    <Link to='/blog' className="mr-5 cursor-pointer border-b border-transparent hover:border-indigo-600">
+                     News
+                    </Link>
                 </nav>
                 <div className="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
                     {

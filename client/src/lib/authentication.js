@@ -1,5 +1,6 @@
 import Cookie from "js-cookie";
 
+
 export  const authentication = (data) => {
     Cookie.set("token",data.token,{expires:1})
     localStorage.setItem("user",JSON.stringify(data.user))

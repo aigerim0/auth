@@ -3,7 +3,8 @@ const cors = require("cors")
 const mongoose = require('mongoose')
 const chalk = require("chalk")
 require("dotenv").config()
-const  authPouter = require("./routers/auth")
+const  authRouter = require("./routers/auth")
+const  newsRouter = require("./routers/news")
 
 
 const server = express()
@@ -17,7 +18,8 @@ server.use(cors())
 server.use(express.json())
 
 
-server.use("/api/v1/", authPouter)
+server.use("/api/v1/", authRouter)
+server.use("/api/v1/news", newsRouter)
 
 const port = 8080
 
