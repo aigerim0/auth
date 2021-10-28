@@ -12,6 +12,8 @@ import {authentication, clearUser} from "../../lib/authentication";
 import Cookies from "js-cookie";
 import axios from "axios";
 import AdminRoute from "../AdminRoute";
+import UserInfo from "../../pages/UserInfo";
+import PostInfo from "../../pages/PostInfo";
 
 
 const Routes = () => {
@@ -31,6 +33,8 @@ const Routes = () => {
 
     <Route exact path='/' component={App}/>
     <Route exact path='/blog' component={Blog}/>
+    <Route exact path='/user/:id' component={UserInfo}/>
+    <Route exact path='/news/:id' component={PostInfo}/>
     <Route exact path='/signup' component={Signup}/>
     <Route exact path='/signin' component={Signin}/>
     <PrivateRoute exact path='/private' component={Private}/>

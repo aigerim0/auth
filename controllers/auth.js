@@ -66,8 +66,26 @@ if (!token){
 
 }
 
+
+const getUserInfo = async (req,res) => {
+try {
+    const user =  await  User.findById(req.params.id).populate("news")
+
+    res.json( {
+        _id: user._id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+        news:user.news
+    })
+}catch (e) {
+    return res.status(401).json({message:"Неудалось загрузить пользователя"})
+}
+}
+
 module.exports = {
     signup,
     signin,
-    authenticate
+    authenticate,
+    getUserInfo
 }
