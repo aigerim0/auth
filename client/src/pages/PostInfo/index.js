@@ -2,53 +2,77 @@ import React, {useEffect, useState} from 'react';
 import Layout from "../../components/Layout";
 import axios from "axios";
 import {useParams} from "react-router-dom";
+import Loading from "../../components/Loading";
+import {toast, ToastContainer} from "react-toastify";
 
 const PostInfo = () => {
+    const user = JSON.parse(localStorage.getItem("user"))
     const  {id} = useParams()
     const [postInfo, setPostInfo] = useState({})
+    const [isLoading, setIsLoading] = useState(true)
+const [value,setValue] = useState('')
+    const handleChange = (e) => {
+setValue({content: e.target.value})
+    }
 
+    const handleSubmit = (e) => {
+       e.preventDefault()
+        axios.post("http://localhost:8080/api/v1/comments",{...value,news:id,user: user._id})
+            .then(({data}) => {
+                console.log(data)
+                setValue({content:''})
+                toast.success("Сохранено!")
+                setPostInfo({...postInfo, comments:[...postInfo.comments,data]})
+            })
+    }
     useEffect(() => {
         axios(`http://localhost:8080/api/v1/news/${id}`)
             .then(({data}) => {
                 setPostInfo(data)
+                setIsLoading(false)
             })
     }, [])
+
+    if (isLoading){
+        return <Loading/>
+    }
     return (
         <Layout>
+            <ToastContainer/>
             <h2>{postInfo.title}</h2>
             <p>{postInfo.description}</p>
-         
-            <div className="flex justify-center items-center w-screen h-screen bg-gray-800">
-                <div className="container mx-auto mt-10 mb-10 lg:mb-40 lg:px-20">
-                    <div className="relative w-full my-4 lg:w-9/12 mr-auto rounded-2xl shadow-2xl">
-                        <img alt="Card" src="https://cdn.pixabay.com/photo/2015/06/08/15/06/woman-801872_960_720.jpg" className="max-w-full rounded-lg shadow-lg"/>
-                    </div>
-                    <div className="relative w-full lg:-mt-96 lg:w-3/6 p-8 ml-auto bg-blue-800 rounded-2xl z-50">
-                        <div className="flex flex-col text-white">
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="text-indigo-200 fill-current w-12 h-12 md:w-16 md:h-16" viewBox="0 0 24 24"><path d="M6.5 10c-.223 0-.437.034-.65.065.069-.232.14-.468.254-.68.114-.308.292-.575.469-.844.148-.291.409-.488.601-.737.201-.242.475-.403.692-.604.213-.21.492-.315.714-.463.232-.133.434-.28.65-.35.208-.086.39-.16.539-.222.302-.125.474-.197.474-.197L9.758 4.03c0 0-.218.052-.597.144C8.97 4.222 8.737 4.278 8.472 4.345c-.271.05-.56.187-.882.312C7.272 4.799 6.904 4.895 6.562 5.123c-.344.218-.741.4-1.091.692C5.132 6.116 4.723 6.377 4.421 6.76c-.33.358-.656.734-.909 1.162C3.219 8.33 3.02 8.778 2.81 9.221c-.19.443-.343.896-.468 1.336-.237.882-.343 1.72-.384 2.437-.034.718-.014 1.315.028 1.747.015.204.043.402.063.539.017.109.025.168.025.168l.026-.006C2.535 17.474 4.338 19 6.5 19c2.485 0 4.5-2.015 4.5-4.5S8.985 10 6.5 10zM17.5 10c-.223 0-.437.034-.65.065.069-.232.14-.468.254-.68.114-.308.292-.575.469-.844.148-.291.409-.488.601-.737.201-.242.475-.403.692-.604.213-.21.492-.315.714-.463.232-.133.434-.28.65-.35.208-.086.39-.16.539-.222.302-.125.474-.197.474-.197L20.758 4.03c0 0-.218.052-.597.144-.191.048-.424.104-.689.171-.271.05-.56.187-.882.312-.317.143-.686.238-1.028.467-.344.218-.741.4-1.091.692-.339.301-.748.562-1.05.944-.33.358-.656.734-.909 1.162C14.219 8.33 14.02 8.778 13.81 9.221c-.19.443-.343.896-.468 1.336-.237.882-.343 1.72-.384 2.437-.034.718-.014 1.315.028 1.747.015.204.043.402.063.539.017.109.025.168.025.168l.026-.006C13.535 17.474 15.338 19 17.5 19c2.485 0 4.5-2.015 4.5-4.5S19.985 10 17.5 10z"/></svg>
-                            </div>
-                            <p className="text-white my-5 px-2">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tincidunt arcu diam,
-                                eu feugiat felis fermentum id. Curabitur vitae nibh viverra, auctor turpis sed, scelerisque ex.
-                            </p>
-                            <div className="flex justify-between pl-2">
-                                <h3 className="font-bold text-2xl">Charles Philips</h3>
-                                <i className="fas fa-quote-right text-2xl" />
-                            </div>
-                        </div>
-                    </div>
+            {
+              postInfo.comments.map(item =>
+                  <div key={item._id} className="mb-4">
+                      <div>
+                          Автор: {item.user.name}
+                      </div>
+                      <div>
+                          {item.content}
+                      </div>
+                  </div>
+              )
+            }
+        <form onSubmit={handleSubmit}>
+            <div className="w-full md:w-full  mb-2 mt-2">
+                <h2 className="  pb-2 text-gray-800 text-lg">Comments:</h2>
+                <textarea
+                    className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                    name="description"
+                    placeholder='Create comment'
+                    required
+                    value={value.content}
+                    onChange={handleChange}
+                />
+            </div>
+            <div className="w-full md:w-full flex items-start md:w-full ">
+
+                <div className="-mr-1">
+                    <input type='submit' className="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100" value='Add comment'/>
                 </div>
             </div>
-            
-            <div className="flex items-end justify-end fixed bottom-0 right-0 mb-4 mr-4 z-10">
-                <div>
-                    <a title="Buy me a pizza" href="https://www.buymeacoffee.com/Dekartmc" target="_blank"
-                       className="block w-16 h-16 rounded-full transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12">
-                        <img className="object-cover object-center w-full h-full rounded-full" src="https://img.icons8.com/emoji/48/000000/pizza-emoji.png"/>
-                    </a>
-                </div>
-            </div>
+        </form>
+
         </Layout>
     );
 };

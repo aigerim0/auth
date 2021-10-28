@@ -4,6 +4,7 @@ import axios from "axios";
 import {toast,ToastContainer} from "react-toastify";
 
 const Create = () => {
+    const user  = JSON.parse(localStorage.getItem("user"))
     const [values, setValues]= useState({
         title: "",
         description: ""
@@ -13,8 +14,8 @@ const Create = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post("http://localhost:8080/api/v1/news",values)
-            .then(({data}) => {
+        axios.post("http://localhost:8080/api/v1/news",{...values,user:user._id})
+            .then(() => {
                  toast.success("Successfully saved!")
                  setValues({title:"", description:""})
 

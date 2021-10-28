@@ -39,7 +39,7 @@ const Blog = () => {
                                 <Link to={`/news/${item._id}`}>
                                     <h2 className="text-gray-800 text-3xl font-semibold"> {item.title}</h2>
                                 </Link>
-                                <p className="mt-2 text-gray-600">{item.description}</p>
+                                <p className="mt-2 text-gray-600">{item.description.length > 49 ?item.description.split(' ').slice(0,50).join(' ')+ "..." : item.description}</p>
                             </div>
                             <div className="flex justify-end mt-4 ">
                                 <Link to={`/user/${item?.user?._id}`} class="text-xl font-medium text-indigo-500">{item?.user?.name}</Link>

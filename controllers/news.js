@@ -11,7 +11,10 @@ const User = require("../models/user")
 
  const getOneNews = async (req,res) => {
     try {
-        const oneNew = await News.findById(req.params.id)
+        const oneNew = await News.findById(req.params.id).populate("comments").populate({
+            path:"comments",
+            populate: "user"
+        })
         res.json(oneNew)
     }catch (e) {
         res.status(400).json("Ошибка получения!")

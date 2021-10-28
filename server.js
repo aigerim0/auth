@@ -5,6 +5,7 @@ const chalk = require("chalk")
 require("dotenv").config()
 const  authRouter = require("./routers/auth")
 const  newsRouter = require("./routers/news")
+const  commentsRouter = require("./routers/comments")
 
 
 const server = express()
@@ -20,6 +21,7 @@ server.use(express.json())
 
 server.use("/api/v1/", authRouter)
 server.use("/api/v1/news", newsRouter)
+server.use("/api/v1/comments", commentsRouter)
 
 const port = 8080
 
