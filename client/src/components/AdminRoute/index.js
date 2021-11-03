@@ -1,14 +1,16 @@
 import React from 'react';
 import {Route,Redirect} from "react-router-dom";
-import {isAuth} from "../../lib/authentication";
+import {useSelector} from "react-redux";
 
 function AdminRoute({ component:Component, ...rest }) {
+    const auth =  useSelector(s => s.user.auth)
+    const user =  useSelector(s => s.user.user)
 
     return (
         <Route
             {...rest}
             render={({ location }) =>
-                isAuth() && isAuth().role === "admin" ? (
+                auth && user.role === "admin" ? (
                     <Component/>
                 ) : (
                     <Redirect

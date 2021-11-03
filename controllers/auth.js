@@ -47,12 +47,15 @@ const signin = (req, res) => {
 
 
 const authenticate = async (req, res) => {
-    const token = req.body.token
+    const token = req.header("auth-token")
+    console.log(token)
+
     try {
         if (!token) {
             return res.status(401).json({message: "Токен не найден"})
         }
-        const payload = jsonwebtoken.verify(req.body.token, process.env.SECRET_KEY)
+        const payload = jsonwebtoken.verify(token, process.env.SECRET_KEY)
+        console.log(payload)
         const user = await User.findOne({_id: payload._id})
         res.json({
             token, user: {
@@ -63,6 +66,7 @@ const authenticate = async (req, res) => {
             }
         })
     } catch (e) {
+        console.log(666)
         return res.status(401).json({message: "Invalid token"})
     }
 

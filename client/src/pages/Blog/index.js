@@ -1,20 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Layout from "../../components/Layout";
-import {clearUser, isAuth} from "../../lib/authentication";
 import {Link} from "react-router-dom";
-import axios from "axios";
+
 import Loading from "../../components/Loading";
+import {useDispatch, useSelector} from "react-redux";
+import {getNews} from "../../redux/action/blogActions";
 
 const Blog = () => {
-    const [news, setNews] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-
+const dispatch  = useDispatch()
+const {news,isLoading} =  useSelector(s => s.blog)
+const auth =  useSelector(s => s.user.auth)
     useEffect(() => {
-        axios("http://localhost:8080/api/v1/news")
-            .then(({data}) => {
-                setNews(data)
-                setIsLoading(false)
-            })
+dispatch(getNews())
     },[])
 
     if(isLoading){
@@ -25,7 +22,7 @@ const Blog = () => {
           <div className='flex justify-between items-center'>
               <h2>News</h2>
               {
-                  isAuth() &&       <Link to="/create-post"    className="bg-indigo-700 hover:bg-indigo-500 text-white ml-4 py-2 px-3 rounded-lg" >
+                  auth &&       <Link to="/create-post"    className="bg-indigo-700 hover:bg-indigo-500 text-white ml-4 py-2 px-3 rounded-lg" >
                       Create post
                   </Link>
               }

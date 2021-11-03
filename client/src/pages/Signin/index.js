@@ -5,8 +5,11 @@ import axios from "axios";
 
 import {authentication, isAuth} from "../../lib/authentication";
 import {Redirect} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {signIn} from "../../redux/action/userActions";
 
 const Signin = () => {
+    const dispatch = useDispatch()
     const [values,setValues] = useState({
         email:"",
         password:""
@@ -18,24 +21,26 @@ const Signin = () => {
     const handleSubmit = (e) => {
 
         e.preventDefault()
-        axios({
-            method:"POST",
-            url:"http://localhost:8080/api/v1/signin",
-            data:values,
-        }).then(({data}) => {
-            authentication(data)
-            toast.success(`Дoбро пожаловать ${data.user.name}`)
-            setValues({ email:"", password:""})
-        }).catch((e) => {
-           toast.error(e.response.data.message)
-            setValues({email:"", password:""})
-        })
+        dispatch(signIn(values))
+
+        // axios({
+        //     method:"POST",
+        //     url:"http://localhost:8080/api/v1/signin",
+        //     data:values,
+        // }).then(({data}) => {
+        //     authentication(data)
+        //     toast.success(`Дoбро пожаловать ${data.user.name}`)
+        //     setValues({ email:"", password:""})
+        // }).catch((e) => {
+        //    toast.error(e.response.data.message)
+        //     setValues({email:"", password:""})
+        // })
 
     }
     return (
         <Layout>
             <ToastContainer/>
-            {isAuth() ? <Redirect to="/"/> : null}
+
             <div className="flex items-center justify-center">
                 <div className="w-full max-w-md">
                     <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded px-12 pt-6 pb-8 mb-4">

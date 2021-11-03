@@ -1,8 +1,14 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {clearUser, isAuth} from "../../lib/authentication";
+import {useDispatch, useSelector} from "react-redux";
+import {logout} from "../../redux/action/userActions";
 
 const Header = () => {
+    const auth = useSelector(s => s.user.auth)
+    const user = useSelector(s => s.user.user)
+    const dispatch = useDispatch()
+
+
     return (
         <header className="text-gray-100 bg-gray-900 body-font shadow w-full">
             <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -19,7 +25,7 @@ const Header = () => {
                     <Link to="/private"
                         className="mr-5  cursor-pointer border-b border-transparent hover:border-indigo-600">Private</Link>
                     {
-                        isAuth().role === "admin" &&
+                        user.role === "admin" && auth &&
                         <Link to='/admin' className="mr-5 cursor-pointer border-b border-transparent hover:border-indigo-600">
                             Admin
                         </Link>
@@ -30,10 +36,13 @@ const Header = () => {
                 </nav>
                 <div className="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
                     {
-                        isAuth() ?
-                            <button    className="bg-indigo-700 hover:bg-indigo-500 text-white ml-4 py-2 px-3 rounded-lg" onClick={clearUser}>
-                                Logout
-                            </button>
+                        auth ?
+                            <div className='flex '>
+                                <h3>Привет, {user.name}</h3>
+                                <button    className="bg-indigo-700 hover:bg-indigo-500 text-white ml-4 py-2 px-3 rounded-lg" onClick={() => dispatch(logout())}>
+                                    Logout
+                                </button>
+                            </div>
                             :
                    <>
                        <Link  to="/signup" className="bg-indigo-700 hover:bg-indigo-500 text-white ml-4 py-2 px-3 rounded-lg">
