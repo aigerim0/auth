@@ -16,6 +16,7 @@ import {history} from "../../lib/history";
 import {useDispatch, useSelector} from "react-redux";
 import {authUser} from "../../redux/action/userActions";
 import Loading from "../Loading";
+import Layout from "../Layout";
 
 
 const Routes = () => {
@@ -27,7 +28,13 @@ const Routes = () => {
 
 
     if (isLoadingUserInfo){
-        return "LOADING..."
+        return <div className='flex justify-center'>
+                <div className="orbit-spinner loading">
+                    <div className="orbit"></div>
+                    <div className="orbit"></div>
+                    <div className="orbit"></div>
+                </div>
+            </div>
     }
     return (
         <Router history={history}>

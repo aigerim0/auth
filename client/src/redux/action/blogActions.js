@@ -1,6 +1,7 @@
 import axiosV1 from "../../services/api";
 
 import Cookies from "js-cookie";
+import axios from "axios";
 export const getNews = () => {
 
     return (dispatch) => {
@@ -15,3 +16,4 @@ export const getNews = () => {
             })
     }
 }
+

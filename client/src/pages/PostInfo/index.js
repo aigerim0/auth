@@ -4,12 +4,15 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 import Loading from "../../components/Loading";
 import {toast, ToastContainer} from "react-toastify";
+import {useDispatch, useSelector} from "react-redux";
+import {addComment, getPost} from "../../redux/action/postActions";
+
 
 const PostInfo = () => {
-    const user = JSON.parse(localStorage.getItem("user"))
+    const dispatch = useDispatch()
+    const {user} = useSelector(s => s.user)
     const  {id} = useParams()
-    const [postInfo, setPostInfo] = useState({})
-    const [isLoading, setIsLoading] = useState(true)
+const {post,isLoading }= useSelector(s => s.post )
 const [value,setValue] = useState('')
     const handleChange = (e) => {
 setValue({content: e.target.value})
@@ -17,20 +20,10 @@ setValue({content: e.target.value})
 
     const handleSubmit = (e) => {
        e.preventDefault()
-        axios.post("http://localhost:8080/api/v1/comments",{...value,news:id,user: user._id})
-            .then(({data}) => {
-                console.log(data)
-                setValue({content:''})
-                toast.success("Сохранено!")
-                setPostInfo({...postInfo, comments:[...postInfo.comments,data]})
-            })
+dispatch(addComment(value,id,user._id))
     }
     useEffect(() => {
-        axios(`http://localhost:8080/api/v1/news/${id}`)
-            .then(({data}) => {
-                setPostInfo(data)
-                setIsLoading(false)
-            })
+dispatch(getPost(id))
     }, [])
 
     if (isLoading){
@@ -39,10 +32,10 @@ setValue({content: e.target.value})
     return (
         <Layout>
             <ToastContainer/>
-            <h2>{postInfo.title}</h2>
-            <p>{postInfo.description}</p>
+            <h2>{post.title}</h2>
+            <p>{post.description}</p>
             {
-              postInfo.comments.map(item =>
+                post.comments.map(item =>
                   <div key={item._id} className="mb-4">
                       <div>
                           Автор: {item.user.name}
