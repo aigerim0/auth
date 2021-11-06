@@ -25,7 +25,7 @@ const Create = () => {
         })
     }
     return (
-        <Layout>
+        <div>
 <ToastContainer/>
             <div className="flex mx-auto items-center justify-center shadow-lg mt-24 mx-8 mb-4 max-w-lg">
                 <form onSubmit={handleSubmit} className="w-full max-w-xl bg-white rounded-lg px-4 pt-2">
@@ -63,7 +63,7 @@ const Create = () => {
                 </form>
             </div>
 
-        </Layout>
+        </div>
     );
 };
 

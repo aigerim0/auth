@@ -33,3 +33,21 @@ export const authUser = () => {
             })
     }
 }
+
+export const loginWithGoogle = (response) => {
+    return (dispatch) => {
+        axios({
+            method: "POST",
+            url: "http://localhost:8080/api/v1/google-login",
+            data: {idToken: response.tokenId}
+        })
+            .then(({data}) => {
+                Cookie.set("token", data.token)
+ dispatch({type:"USER_SIGNIN", payload:data.user})
+                history.push("/")
+            })
+            .catch(error => {
+                console.log("GOOGLE SIGNIN ERROR",error.response)
+            })
+    }
+}

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import Layout from "../../components/Layout";
 import {useParams} from "react-router-dom"
 import axios from "axios";
 import Loading from "../../components/Loading";
@@ -21,7 +20,7 @@ if (isLoading){
     return <Loading/>
 }
     return (
-        <Layout>
+        <div>
                 <div className="w-full bg-gray-800">
                     <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-4 py-12">
                         <div className="text-center pb-12">
@@ -62,7 +61,7 @@ if (isLoading){
                         </div>
                     </section>
             </div>
-        </Layout>
+        </div>
     );
 };
 

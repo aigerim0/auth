@@ -1,6 +1,5 @@
 import React, { useState} from 'react';
 import axios from "axios";
-import Layout from "../../components/Layout";
 import {ToastContainer,toast} from "react-toastify";
 
 const Signup = () => {
@@ -28,7 +27,7 @@ const Signup = () => {
 
     }
     return (
-        <Layout>
+        <div>
             <ToastContainer/>
             <div className="flex items-center justify-center">
                 <div className="w-full max-w-md">
@@ -99,7 +98,7 @@ const Signup = () => {
                     </form>
                 </div>
             </div>
-        </Layout>
+        </div>
     );
 };
 

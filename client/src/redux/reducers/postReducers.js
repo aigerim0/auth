@@ -6,12 +6,14 @@ const initialsState = {
 
 export const postReducer = (state = initialsState,action) => {
     switch (action.type){
-        case "POST_REQUEST":
-            return {...state,isLoading: true}
+        case "POST_LOADING":
+            return {...state, isLoading: true}
         case "POST_SUCCESS":
             return {...state,post: action.payload, isLoading: false}
         case "POST_FAILED":
-            return {...state,isLoading: false, error: action.payload}
+            return {...state, error: action.payload,isLoading: false}
+        case "COMMENT_SUCCESS":
+            return {...state, post: {...state.post, comments:[...state.post.comments, action.payload ]}}
         default:
             return state
     }

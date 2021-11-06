@@ -6,6 +6,8 @@ const initialsState = {
 
 export const blogReducer = (state = initialsState,action) => {
     switch (action.type){
+        case "NEWS_LOADING" :
+            return {...state, isLoading: true}
         case "BLOG_REQUEST":
             return {...state,isLoading: true}
         case "BLOG_SUCCESS":

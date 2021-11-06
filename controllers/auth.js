@@ -1,5 +1,6 @@
 const User = require('../models/user')
 const jsonwebtoken = require("jsonwebtoken")
+const {OAuth2Client} = require("google-auth-library")
 
 const signup = (req, res) => {
     const {name, email, password} = req.body
@@ -89,9 +90,61 @@ const getUserInfo = async (req, res) => {
     }
 }
 
+
+const client = new OAuth2Client("769849341124-p8ijladioa96ajl9fmf1jc5fm379orbi.apps.googleusercontent.com");
+const googleLogin = (req, res) => {
+    const {idToken} = req.body
+
+    client.verifyIdToken({
+        idToken,
+        audience: "769849341124-p8ijladioa96ajl9fmf1jc5fm379orbi.apps.googleusercontent.com"
+    })
+        .then(response => {
+            const {email_verified, name, email} = response.payload
+
+            if (email_verified) {
+                User.findOne({email}).exec((err, user) => {
+                    if (user) {
+                        const token = jsonwebtoken.sign({_id: user._id}, process.env.SECRET_KEY, {expiresIn: "7d"})
+                        const {_id, email, name, role} = user;
+                        return res.json({
+                            token,
+                            user: {_id, email, name, role}
+                        })
+                    } else {
+                        let password = email + process.env.SECRET_KEY
+                        user = new User({name, email, password})
+                        user.save((err, data) => {
+                            if (err) {
+                                console.log("ERROR GOOGLE LOGIN ON USER SAVE", err)
+                                return res.status(400).json({
+                                    error: "User signup failed with google"
+                                })
+                            }
+                            const token = jsonwebtoken.sign({_id: user._id}, process.env.SECRET_KEY, {expiresIn: "7d"})
+                            const {_id, email, name, role} = data
+                            return res.json({
+                                token,
+                                user: {_id, email, name, role}
+                            })
+                        })
+                    }
+                })
+
+            } else {
+                return res.status(400).json({
+                    error: "Google login failed. Try again"
+                })
+            }
+        })
+
+}
+
+
 module.exports = {
     signup,
     signin,
     authenticate,
-    getUserInfo
+    getUserInfo,
+    googleLogin
 }

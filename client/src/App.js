@@ -3,10 +3,11 @@ import Layout from "./components/Layout";
 
 const App = () => {
     return (
-        <Layout>
+        <div>
           app
-        </Layout>
+        </div>
     );
+
 };
 
 export default App;

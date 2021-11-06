@@ -14,6 +14,7 @@ switch (action.type){
         return  {...state,user: action.payload, auth: true,isLoadingUserInfo: false}
     case "USER_AUTHENTICATE_FAILED":
         return {...state, isLoadingUserInfo: false}
+
     default:
         return state
 }

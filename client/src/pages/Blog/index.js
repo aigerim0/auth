@@ -1,10 +1,9 @@
 import React, {useEffect} from 'react';
-import Layout from "../../components/Layout";
 import {Link} from "react-router-dom";
 
 import Loading from "../../components/Loading";
 import {useDispatch, useSelector} from "react-redux";
-import {getNews} from "../../redux/action/blogActions";
+import {getNews, newsLoading} from "../../redux/action/blogActions";
 
 const Blog = () => {
 const dispatch  = useDispatch()
@@ -12,13 +11,16 @@ const {news,isLoading} =  useSelector(s => s.blog)
 const auth =  useSelector(s => s.user.auth)
     useEffect(() => {
 dispatch(getNews())
+        return () => {
+    dispatch(newsLoading())
+        }
     },[])
 
     if(isLoading){
        return <Loading/>
     }
     return (
-        <Layout>
+        <div>
           <div className='flex justify-between items-center'>
               <h2>News</h2>
               {
@@ -47,7 +49,7 @@ dispatch(getNews())
                 }
 
 
-        </Layout>
+        </div>
     );
 };
 

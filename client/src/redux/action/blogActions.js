@@ -2,6 +2,11 @@ import axiosV1 from "../../services/api";
 
 import Cookies from "js-cookie";
 import axios from "axios";
+
+export const newsLoading = () => {
+    return {"type" : "NEWS_LOADING"}
+}
+
 export const getNews = () => {
 
     return (dispatch) => {

@@ -4,7 +4,7 @@ import Layout from "../Layout";
 
 const Loading = () => {
     return (
-     <Layout>
+     <div>
        <div className='flex justify-center'>
            <div className="orbit-spinner loading">
                <div className="orbit"></div>
@@ -12,7 +12,7 @@ const Loading = () => {
                <div className="orbit"></div>
            </div>
        </div>
-     </Layout>
+     </div>
     );
 };
 
