@@ -1,12 +1,5 @@
-import React from 'react';
-import Layout from "../../components/Layout";
+import React from 'react'
 
-const Admin = () => {
-    return (
-        <div>
-            Admin
-        </div>
-    );
-};
+const Admin = () => <div>Admin</div>
 
-export default Admin;
+export default Admin

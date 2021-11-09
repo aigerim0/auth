@@ -1,12 +1,5 @@
-import React from 'react';
+import React from 'react'
 
+const Private = () => <div>Private</div>
 
-const Private = () => {
-    return (
-        <div>
-           Private
-        </div>
-    );
-};
-
-export default Private;
+export default Private

@@ -1,13 +1,5 @@
-import React from 'react';
-import Layout from "./components/Layout";
+import React from 'react'
 
-const App = () => {
-    return (
-        <div>
-          app
-        </div>
-    );
+const App = () => <div>app</div>
 
-};
-
-export default App;
+export default App

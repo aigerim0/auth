@@ -28,12 +28,23 @@
     "tailwindcss": "^2.2.17",
     "web-vitals": "^1.0.1"
   },
+  "devDependencies": {
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "postcss": "^8.3.11",
+    "postcss-cli": "^9.0.1",
+    "prettier": "^2.4.1"
+  },
   "scripts": {
     "start": " yarn run watch:css && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "watch:css": "postcss src/assets/styles/tailwindcss.css -o src/assets/styles/main.css"
+    "watch:css": "postcss src/assets/styles/tailwindcss.css -o src/assets/styles/main.css",
+    "format": "prettier \" src/**/*.{js, jsx}\""
   },
   "eslintConfig": {
     "extends": [
