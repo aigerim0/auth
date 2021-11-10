@@ -22,9 +22,12 @@
     "google-auth-library": "^7.10.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "stripe": "^8.186.1"
   },
   "nodemonConfig": {
-    "ignore": ["client"]
+    "ignore": [
+      "client"
+    ]
   }
 }

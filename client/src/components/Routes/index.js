@@ -1,21 +1,24 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, Suspense, lazy } from 'react'
 import { Router, Route, Switch } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'js-cookie'
 import App from '../../App'
-import Private from '../../pages/Private'
-import Admin from '../../pages/Admin'
-import Signup from '../../pages/Signup'
-import Signin from '../../pages/Signin'
-import PrivateRoute from '../PrivateRoute'
-import Blog from '../../pages/Blog'
-import Create from '../../pages/Create'
 import AdminRoute from '../AdminRoute'
-import UserInfo from '../../pages/UserInfo'
-import PostInfo from '../../pages/PostInfo'
+import PrivateRoute from '../PrivateRoute'
 import { history } from '../../lib/history'
 import { authUser } from '../../redux/action/userActions'
 import Layout from '../Layout'
+import Loading from '../Loading'
+
+const Signup = lazy(() => import('../../pages/Signup'))
+const Signin = lazy(() => import('../../pages/Signin'))
+const Private = lazy(() => import('../../pages/Private'))
+const Admin = lazy(() => import('../../pages/Admin'))
+const Blog = lazy(() => import('../../pages/Blog'))
+const Create = lazy(() => import('../../pages/Create'))
+const UserInfo = lazy(() => import('../../pages/UserInfo'))
+const Membership = lazy(() => import('../../pages/Membership'))
+const PostInfo = lazy(() => import('../../pages/PostInfo'))
 
 const Routes = () => {
   const dispatch = useDispatch()
@@ -41,17 +44,20 @@ const Routes = () => {
   return (
     <Router history={history}>
       <Layout>
-        <Switch>
-          <Route exact path="/" component={App} />
-          <Route exact path="/blog" component={Blog} />
-          <Route exact path="/user/:id" component={UserInfo} />
-          <Route exact path="/news/:id" component={PostInfo} />
-          <Route exact path="/signup" component={Signup} />
-          <Route exact path="/signin" component={Signin} />
-          <PrivateRoute exact path="/private" component={Private} />
-          <PrivateRoute exact path="/create-post" component={Create} />
-          <AdminRoute exact path="/admin" component={Admin} />
-        </Switch>
+        <Suspense fallback={<Loading />}>
+          <Switch>
+            <Route exact path="/" component={App} />
+            <Route exact path="/blog" component={Blog} />
+            <Route exact path="/user/:id" component={UserInfo} />
+            <Route exact path="/news/:id" component={PostInfo} />
+            <Route exact path="/signup" component={Signup} />
+            <Route exact path="/signin" component={Signin} />
+            <PrivateRoute exact path="/private" component={Private} />
+            <PrivateRoute exact path="/create-post" component={Create} />
+            <PrivateRoute exact path="/create-post" component={Membership} />
+            <AdminRoute exact path="/admin" component={Admin} />
+          </Switch>
+        </Suspense>
       </Layout>
     </Router>
   )
