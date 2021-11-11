@@ -54,8 +54,8 @@ const PaymentForm = () => {
           console.log('Payment successfully!')
           setSuccess(true)
         }
-      } catch (e) {
-        console.log('error>>', e)
+      } catch (err) {
+        console.log('error>>', err)
       }
     } else {
       console.log(error.message)
@@ -63,25 +63,25 @@ const PaymentForm = () => {
   }
   return (
     <>
-      {!success} ? (
-      <form onSubmit={handleSubmit}>
-        <fieldset className="FormCroup">
-          <div className="FormRow">
-            <CardCvcElement options={CARD_OPTIONS} />
-          </div>
-        </fieldset>
-        <button
-          className="bg-green-500 px-8 py-2 text-white pt-4"
-          type="submit"
-        >
-          Pay
-        </button>
-      </form>
+      {!success ? (
+        <form onSubmit={handleSubmit}>
+          <fieldset className="FormCroup">
+            <div className="FormRow">
+              <CardCvcElement options={CARD_OPTIONS} />
+            </div>
+          </fieldset>
+          <button
+            className="bg-green-500 px-8 py-2 text-white pt-4"
+            type="submit"
+          >
+            Pay
+          </button>
+        </form>
       ) : (
-      <div>
-        <h2>Payment was successfully!</h2>
-      </div>
-      )
+        <div>
+          <h2>Payment was successfully!</h2>
+        </div>
+      )}
     </>
   )
 }

@@ -5,6 +5,7 @@ const chalk = require("chalk");
 require("dotenv").config();
 const authRouter = require("./routers/auth");
 const newsRouter = require("./routers/news");
+const stripeRouter = require("./routers/strype");
 const commentsRouter = require("./routers/comments");
 
 const server = express();

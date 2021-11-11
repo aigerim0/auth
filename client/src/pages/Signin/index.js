@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { signIn } from '../../redux/action/userActions'
 import Google from '../../components/GoogleAuth'
 
 const Signin = () => {
   const dispatch = useDispatch()
+  const auth = useSelector((s) => s.user.user)
   const [values, setValues] = useState({
     email: '',
     password: ''
@@ -20,6 +22,7 @@ const Signin = () => {
   return (
     <div className="flex items-center justify-center">
       <div className="w-full max-w-md">
+        {auth && <Redirect to="/" />}
         <form
           onSubmit={handleSubmit}
           className="bg-white shadow-lg rounded px-12 pt-6 pb-8 mb-4"

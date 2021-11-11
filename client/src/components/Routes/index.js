@@ -54,7 +54,7 @@ const Routes = () => {
             <Route exact path="/signin" component={Signin} />
             <PrivateRoute exact path="/private" component={Private} />
             <PrivateRoute exact path="/create-post" component={Create} />
-            <PrivateRoute exact path="/create-post" component={Membership} />
+            <PrivateRoute exact path="/membership" component={Membership} />
             <AdminRoute exact path="/admin" component={Admin} />
           </Switch>
         </Suspense>

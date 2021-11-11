@@ -34,7 +34,7 @@ const Header = () => {
           </Link>
           {auth && (
             <Link
-              to="/private"
+              to="/membership"
               className="mr-5  cursor-pointer border-b border-transparent hover:border-indigo-600"
             >
               Membership
