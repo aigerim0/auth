@@ -6,6 +6,7 @@ import { logout } from '../../redux/action/userActions'
 const Header = () => {
   const auth = useSelector((s) => s.user.auth)
   const user = useSelector((s) => s.user.user)
+
   const dispatch = useDispatch()
 
   return (
