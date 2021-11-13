@@ -6,7 +6,7 @@ import Google from '../../components/GoogleAuth'
 
 const Signin = () => {
   const dispatch = useDispatch()
-  const auth = useSelector((s) => s.user.user)
+  const auth = useSelector((s) => s.user.auth)
   const [values, setValues] = useState({
     email: '',
     password: ''

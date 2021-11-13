@@ -1,10 +1,5 @@
 import React, { useState } from 'react'
-import {
-  CardCvcElement,
-  CardElement,
-  useElements,
-  useStripe
-} from '@stripe/react-stripe-js'
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 
 import axios from 'axios'
 
@@ -67,7 +62,7 @@ const PaymentForm = () => {
         <form onSubmit={handleSubmit}>
           <fieldset className="FormCroup">
             <div className="FormRow">
-              <CardCvcElement options={CARD_OPTIONS} />
+              <CardElement options={CARD_OPTIONS} />
             </div>
           </fieldset>
           <button
